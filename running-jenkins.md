@@ -1,11 +1,3 @@
-# Running Jenkins Server in Docker Container with Systemd
-
-# links:
-
-https://computingforgeeks.com/running-jenkins-server-in-docker-container-systemd/
-
-Jenkins is an open source automation server used to automate repetitive tasks that are often encountered in continuous integration and delivery of software. In this guide, we will see how you can run Jenkins server on a Docker container managed via Systemd init system.
-
 # How To Run Jenkins Server in Docker Container
 
 Running Jenkins Server on a Docker has few dependencies that you’ll need to satisfy.
