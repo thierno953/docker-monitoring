@@ -1,0 +1,23 @@
+global:
+  resolve_timeout: 1m
+
+receivers:
+  - name: "gmail-notifications"
+    email_configs:
+      - to: "thiernobarry554@gmail.com"
+        from: "thiernobarry554@gmail.com"
+        smarthost: smtp.gmail.com:587
+        auth_username: "thiernobarry554@gmail.com"
+        auth_identity: "thiernobarry554@gmail.com"
+        auth_password: "ogrdzyvsuawrxxjk"
+        send_resolved: true
+        headers:
+          subject: " Prometheus -  Alert "
+        text: "{{ range .Alerts }} Hi, \n{{ .Annotations.summary }}  \n {{ .Annotations.description }} {{end}} "
+
+route:
+  group_wait: 10s
+  group_interval: 2m
+  receiver: "gmail-notifications"
+  repeat_interval: 2m
+  group_by: [alertname]

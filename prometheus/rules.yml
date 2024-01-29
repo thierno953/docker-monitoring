@@ -1,0 +1,47 @@
+groups:
+  - name: ContainerDown
+    rules:
+      - alert: ContainerInstanceDown
+        expr: count(up{job="docker-containers"}) by (container_label_com_docker_swarm_service_name) == 0
+        for: 2m
+        labels:
+          severity: page
+        annotations:
+          container: "{{ $labels.container_label_com_docker_swarm_service_name }}"
+          summary: "Container down"
+          description: "Container {{ $labels.container_label_com_docker_swarm_service_name }} has been down for more than 5 minutes."
+
+  - name: LowMemoryAlert
+    rules:
+      - alert: LowContainerMemory
+        expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) * 100 > 85
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          container: "{{ $labels.container_name }}"
+          summary: "{{ $labels.container_name }} is low on memory. Only {{ $value }}% left."
+          description: "{{ $labels.container_name }} is low on memory. Only {{ $value }}% left."
+
+  - name: ContainerCrashLooping
+    rules:
+      - alert: ContainerCrashLooping
+        expr: rate(container_cpu_usage_seconds_total{container_label_com_docker_stack_namespace=~".*"}[5m]) * 60 * 5 > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          container: "{{ $labels.container_name }}"
+          summary: "Container {{ $labels.container_name }} is crash looping."
+          description: "Container {{ $labels.container_name }} is restarting frequently."
+
+  - name: ContainerNotReady
+    rules:
+      - alert: ContainerNotReady
+        expr: count by (container_label_com_docker_stack_namespace, container_label_com_docker_stack_service_name) (up == 0) > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Some containers are not ready."
+          description: "Some containers have been in a non-ready state for more than 2 minutes."
