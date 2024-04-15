@@ -4,11 +4,11 @@ global:
 receivers:
   - name: "gmail-notifications"
     email_configs:
-      - to: "thiernobarry554@gmail.com"
-        from: "thiernobarry554@gmail.com"
+      - to: "thierno@gmail.com"
+        from: "thierno@gmail.com"
         smarthost: smtp.gmail.com:587
-        auth_username: "thiernobarry554@gmail.com"
-        auth_identity: "thiernobarry554@gmail.com"
+        auth_username: "thierno@gmail.com"
+        auth_identity: "thierno@gmail.com"
         auth_password: "ogrdzyvsuawrxxjk"
         send_resolved: true
         headers:
