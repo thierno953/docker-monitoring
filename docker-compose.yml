@@ -33,7 +33,7 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:8.5.5
     container_name: grafana
     ports:
       - "3000:3000"
